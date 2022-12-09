@@ -1,35 +1,34 @@
 import React from 'react'
 import { Button } from '../component/Button/Button'
 import { Screen } from '../component/Screen/Screen'
-import { useState } from 'react'
+import { useSelector, useDispatch, TypedUseSelectorHook } from 'react-redux'
+import {
+  incrementHandler,
+  decrementHandler,
+} from '../redux/reducers/counterReducer'
+
+import { RootState } from '../redux/store/store'
 
 export const Main = () => {
-  const [counterState, setConterState] = useState<number>(0)
-
-  const incrementHandler = (event: React.SyntheticEvent): void => {
-    return setConterState((currentState) => ++currentState)
-  }
-  const decrementHandler = (): void => {
-    counterState == 0
-      ? setConterState(0)
-      : setConterState((currentState) => --currentState)
-  }
+  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+  const initialState = useAppSelector((state) => state.countReducer.value)
+  const dispatch = useDispatch()
 
   return (
     <div>
       <div>
-        <Screen valueToDisplay={counterState} />
+        <Screen valueToDisplay={initialState} />
       </div>
       <div>
         <Button
           name="+"
           cssStyle={{ backgroundColor: 'red' }}
-          onClickHandler={incrementHandler}
+          onClickHandler={() => dispatch(incrementHandler())}
         />
         <Button
           name="-"
           cssStyle={{ backgroundColor: 'gold' }}
-          onClickHandler={decrementHandler}
+          onClickHandler={() => dispatch(decrementHandler())}
         />
       </div>
     </div>
