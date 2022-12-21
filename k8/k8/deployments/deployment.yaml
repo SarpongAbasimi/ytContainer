@@ -23,8 +23,7 @@ spec:
     spec:
       containers:
         - name: express-server
-
           image: node_app
           imagePullPolicy: Never
           ports:
-            - containerPort: 80
+            - containerPort: 3000
